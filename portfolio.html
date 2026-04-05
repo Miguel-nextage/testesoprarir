@@ -1,0 +1,814 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfólio | 10 Projetos</title>
+    <style>
+      /* ===================== STYLE.CSS ===================== */
+      body {
+        margin: 0;
+        font-family: Segoe UI;
+        background: #3d3d3d;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      #index-page {
+        background: #000 url("fundosite.png") center/cover fixed;
+      }
+
+      #portfolio-page {
+        background: url("fundoclaro.png") center/cover fixed;
+      }
+
+      #sobre-page {
+        background: url("fundoclaro.png") center/cover fixed;
+      }
+
+      #contato-page {
+        background: url("fundoclaro.png") center/cover fixed;
+      }
+
+      .page-title {
+        text-align: center;
+        font-size: 2.5rem;
+        margin: 20px 0 40px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+
+      .main-nav {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        padding: 0;
+      }
+
+      #index-page .main-nav {
+        padding: 10px 0;
+      }
+
+      #portfolio-page main,
+      #sobre-page main,
+      #contato-page main {
+        margin-top: 0;
+      }
+
+      .main-nav img {
+        width: 70px;
+        height: 70px;
+        transition:
+          transform 0.3s,
+          opacity 0.3s;
+      }
+
+      .main-nav img:hover {
+        transform: scale(1.2);
+        opacity: 0.7;
+      }
+
+      .nav-bar {
+        background: linear-gradient(90deg, #190a0f 0%, #000000 100%);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+      }
+
+      #index-page .nav-bar {
+        background: transparent;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 10;
+      }
+
+      #portfolio-page .nav-bar,
+      #sobre-page .nav-bar,
+      #contato-page .nav-bar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 10;
+      }
+
+      #portfolio-page main,
+      #sobre-page main,
+      #contato-page main {
+        margin-top: 100px;
+      }
+
+      .logo {
+        height: 80px;
+      }
+
+      .overlay {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: -1;
+      }
+
+      header {
+        padding: 60px 0;
+        text-align: center;
+      }
+
+      nav {
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+      }
+
+      nav img {
+        width: 50px;
+        transition: 0.3s;
+      }
+
+      nav img:hover {
+        transform: scale(1.2);
+        opacity: 0.7;
+      }
+
+      main {
+        flex: 1;
+        text-align: center;
+        margin-top: 5vh;
+        padding: 20px;
+      }
+
+      .projetos-container {
+        display: flex;
+        flex-direction: column;
+        gap: 200px;
+      }
+
+      .projeto-item {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 20px;
+      }
+
+      .projeto-direita {
+        flex-direction: row-reverse !important;
+      }
+
+      .projeto-item img {
+        width: 40%;
+        max-width: 400px;
+        border-radius: 8px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
+      }
+
+      .image-stack {
+        position: relative;
+        flex: 0 0 40%;
+        max-width: 400px;
+      }
+
+      .image-stack img {
+        display: none;
+        width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
+        transition: opacity 0.3s;
+      }
+
+      .image-stack img.active {
+        display: block;
+        opacity: 1;
+      }
+
+      .indicators {
+        display: flex;
+        justify-content: center;
+        align-items: center; /* Adicionado para alinhar setas e bolinhas */
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .indicators span {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #aaa;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      .indicators span.active {
+        background: #fff;
+      }
+
+      /* --- INÍCIO DAS ADIÇÕES PARA AS SETAS NAS BOLINHAS --- */
+      .stack-arrow {
+        background: none;
+        border: none;
+        color: #aaa;
+        font-size: 16px;
+        cursor: pointer;
+        padding: 0 5px;
+        transition: color 0.3s;
+      }
+
+      .stack-arrow:hover {
+        color: #fff;
+      }
+      /* --- FIM DAS ADIÇÕES --- */
+
+      .projeto-item .text {
+        flex: 1;
+      }
+
+      .projeto-direita .text {
+        text-align: right;
+      }
+
+      .projeto-item h3 {
+        text-align: left;
+        margin: 0 0 15px 0;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+
+      .projeto-direita h3 {
+        text-align: right;
+      }
+
+      .projeto-item p {
+        text-align: left;
+        color: #aaa;
+        line-height: 1.8;
+      }
+
+      .projeto-direita .text p {
+        text-align: right;
+      }
+
+      .separador {
+        width: 40px;
+        height: 2px;
+        background-color: #333;
+        margin: 0 auto;
+      }
+
+      h2 {
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+
+      .perfil {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        margin-bottom: 20px;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        max-width: 400px;
+        margin: auto;
+      }
+
+      input,
+      textarea {
+        background: #111;
+        border: 1px solid #222;
+        padding: 10px;
+        color: #fff;
+      }
+
+      button {
+        padding: 12px;
+        background: #fff;
+        border: none;
+        cursor: pointer;
+      }
+
+      footer {
+        padding: 40px;
+        text-align: center;
+        color: #444;
+        border-top: 1px solid #111;
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* --- INÍCIO DAS ADIÇÕES DO MODAL CENTRALIZADO E MENOR --- */
+      .modal-content-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px; /* Espaçamento entre as setas e a imagem */
+        width: 100%;
+        height: 100%;
+      }
+
+      .modal img {
+        max-width: 70%; /* Diminuído de 90% para 60% */
+        max-height: 70%; /* Diminuído de 90% para 60% */
+        object-fit: contain;
+      }
+
+      .nav-arrow {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 40px;
+        cursor: pointer;
+        transition: color 0.3s;
+      }
+
+      .nav-arrow:hover {
+        color: #bbb;
+      }
+      /* --- FIM DAS ADIÇÕES --- */
+
+      .close {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        color: #fff;
+        font-size: 40px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .close:hover {
+        color: #bbb;
+      }
+    </style>
+  </head>
+  <body id="portfolio-page">
+    <div class="overlay"></div>
+
+    <div class="nav-bar">
+      <img class="logo" src="logo.png" alt="Logo" />
+      <nav class="main-nav">
+        <a href="index.html"><img src="home.png" /></a>
+        <a href="portfolio.html"><img src="portfolio.png" /></a>
+        <a href="sobre.html"><img src="user.png" /></a>
+        <a href="contato.html"><img src="mail.png" /></a>
+      </nav>
+    </div>
+
+    <main>
+      <h2 class="page-title">Meus Trabalhos</h2>
+
+      <div class="separador"></div>
+      <br />
+      <div class="projetos-container">
+        <div class="projeto-item">
+          <div class="image-stack">
+            <img src="projetos/branco com fundo.png" class="active" />
+            <img src="esboço.png" />
+            <img src="paleta.png" />
+            <div class="indicators">
+              <button class="stack-arrow prev-stack">&#10094;</button>
+              <span data-index="0" class="active"></span>
+              <span data-index="1"></span>
+              <span data-index="2"></span>
+              <button class="stack-arrow next-stack">&#10095;</button>
+            </div>
+          </div>
+          <div class="text">
+            <h3>Yujidō - Logo e Identidade Visual</h3>
+            <p>
+              <b>YUJIDŌ</b> nasce da união entre tradição e identidade.
+              Inspirada nos carimbos japoneses e no símbolo <b>ensō</b>, a marca
+              representa fluxo, disciplina e expressão autêntica. A forma
+              circular remete ao movimento contínuo da criação, enquanto seu
+              centro sugere um olhar — percepção, intenção e consciência no
+              processo criativo.<br />
+              O desenvolvimento partiu de esboços <b>manuais</b>, utilizando da
+              ferramenta "Paint" (como mostra a imagem 2), explorando formas
+              orgânicas e imperfeições naturais do traço, buscando capturar a
+              espontaneidade do gesto. A partir disso, o símbolo foi refinado
+              digitalmente, equilibrando expressividade e precisão.<br />
+              A paleta de cores(Imagem 3) foi definida para reforçar essa
+              identidade. O preto (#1a1a1a) cria uma base sólida, elegante e
+              atemporal, enquanto o vermelho (#bf0d37) introduz contraste e
+              intensidade. O vermelho simboliza <b>energia, impacto e ação</b> —
+              elementos que traduzem a <b>força</b> e a <b>presença</b> da
+              marca. <br />O nome carrega esse mesmo significado:
+              <b>Yuji</b> pode ser associado à força, determinação e energia,
+              enquanto dō (<b>道</b>) representa <b>“o caminho”</b> — uma
+              jornada de aprimoramento constante. Assim, <b>YUJIDŌ</b> se define
+              como o caminho do design guiado por
+              <b>precisão, propósito e visão</b>.
+            </p>
+          </div>
+        </div>
+        <div class="separador"></div>
+
+        <div class="projeto-item projeto-direita">
+          <div class="image-stack">
+            <img src="mulher.png" class="active" />
+            <img src="data magna.png" />
+            <img src="mulher.png" />
+            <div class="indicators">
+              <button class="stack-arrow prev-stack">&#10094;</button>
+              <span data-index="0" class="active"></span>
+              <span data-index="1"></span>
+              <span data-index="2"></span>
+              <button class="stack-arrow next-stack">&#10095;</button>
+            </div>
+          </div>
+          <div class="text">
+            <h3>Data Magna do Ceará - Comemoração</h3>
+            <p>
+              A identidade visual da Data Magna do Ceará foi desenvolvida a
+              partir de uma abordagem editorial, inspirada em capas de revista.
+              A composição valoriza hierarquia tipográfica, enquadramento e
+              impacto visual, criando uma peça que comunica relevância histórica
+              com clareza e presença. O layout busca equilibrar informação e
+              estética, traduzindo o peso cultural da data em uma linguagem
+              contemporânea. O desenvolvimento partiu de esboços iniciais
+              focados na organização dos elementos e na construção de uma
+              hierarquia visual eficiente. A ideia era simular a estrutura de
+              uma capa, explorando títulos, destaques e áreas de respiro. A
+              partir disso, o design foi refinado digitalmente, ajustando
+              proporções, alinhamentos e ritmo visual. A paleta de cores foi
+              pensada para reforçar identidade e significado. O creme claro
+              estabelece uma base suave e equilibrada, enquanto o azul
+              esverdeado traz contraste e frescor. Juntas, as cores evocam
+              tradição e renovação, conectando o passado histórico com uma
+              leitura visual atual. Assim, o projeto se define como uma
+              interpretação visual contemporânea de um marco histórico, unindo
+              informação, estética e identidade.
+            </p>
+          </div>
+        </div>
+        <div class="separador"></div>
+
+        <div class="projeto-item">
+          <div class="image-stack">
+            <img src="data magna.png" class="active" />
+            <img src="mulher.png" />
+            <div class="indicators">
+              <button class="stack-arrow prev-stack">&#10094;</button>
+              <span data-index="0" class="active"></span>
+              <span data-index="1"></span>
+              <button class="stack-arrow next-stack">&#10095;</button>
+            </div>
+          </div>
+          <div class="text">
+            <h3>Dia Internacional da Mulher - Comemoração</h3>
+            <p>
+              A identidade visual para o Dia da Mulher segue uma abordagem
+              editorial inspirada em capas de revista, buscando impacto visual
+              aliado à sensibilidade. A composição destaca elementos
+              tipográficos e visuais de forma equilibrada, transmitindo força,
+              presença e protagonismo feminino através de uma estética moderna e
+              expressiva. O processo começou com esboços focados na estrutura e
+              na distribuição dos elementos, explorando diferentes formas de
+              destacar a mensagem principal. A inspiração em capas editoriais
+              guiou a criação de uma hierarquia clara e envolvente. Em seguida,
+              o projeto foi refinado digitalmente, trazendo precisão aos
+              detalhes e consistência visual. A escolha da paleta reforça essa
+              proposta. O rosa pastel foi utilizado como cor principal,
+              simbolizando sensibilidade, empatia e delicadeza, ao mesmo tempo
+              em que, em contraste com a composição, comunica força e
+              identidade. O resultado é um equilíbrio entre suavidade e impacto
+              visual. Assim, o projeto representa uma celebração visual que une
+              estética, mensagem e significado, valorizando a expressão e a
+              força feminina de forma contemporânea.
+            </p>
+          </div>
+        </div>
+        <div class="separador"></div>
+
+        <div class="projeto-item projeto-direita">
+          <div class="image-stack">
+            <img src="mulher.png" class="active" />
+            <img src="data magna.png" />
+            <div class="indicators">
+              <button class="stack-arrow prev-stack">&#10094;</button>
+              <span data-index="0" class="active"></span>
+              <span data-index="1"></span>
+              <button class="stack-arrow next-stack">&#10095;</button>
+            </div>
+          </div>
+          <div class="text">
+            <h3>
+              Dia Internacional da Conscientização do Autismo - Comemoração
+            </h3>
+            <p>
+              A identidade visual para o Dia Mundial da Conscientização do
+              Autismo foi desenvolvida com base em cartazes publicitários,
+              buscando impacto visual direto e clareza na mensagem. A composição
+              utiliza hierarquia tipográfica e contraste para guiar o olhar,
+              destacando o tema de forma acessível e objetiva. O processo
+              iniciou com esboços voltados à organização dos elementos e à
+              construção de uma leitura eficiente. Em seguida, o design foi
+              refinado digitalmente, ajustando proporções, alinhamentos e
+              equilíbrio visual. A paleta de cores e os elementos simbólicos
+              reforçam a proposta. O azul, amplamente associado à
+              conscientização do autismo, representa calma, compreensão e
+              confiança, além de ser utilizado em campanhas globais para dar
+              visibilidade ao tema. O laço com padrão de quebra-cabeça
+              complementa a identidade, simbolizando diversidade e pluralidade.
+              A presença da figura humana aproxima o público da mensagem, e a
+              frase “ser diferente é apenas outra forma de ser incrível” reforça
+              a valorização da individualidade. Assim, o projeto se define como
+              uma peça visual direta e sensível, que une linguagem publicitária
+              e propósito para promover conscientização.
+            </p>
+          </div>
+        </div>
+        <div class="separador"></div>
+
+        <div class="projeto-item">
+          <div class="image-stack">
+            <img src="data magna.png" class="active" />
+            <img src="mulher.png" />
+            <div class="indicators">
+              <button class="stack-arrow prev-stack">&#10094;</button>
+              <span data-index="0" class="active"></span>
+              <span data-index="1"></span>
+              <button class="stack-arrow next-stack">&#10095;</button>
+            </div>
+          </div>
+          <div class="text">
+            <h3>Apology - LemonSoda</h3>
+            <p>
+              A capa foi desenvolvida com uma abordagem conceitual, buscando
+              traduzir visualmente a atmosfera da música. A composição combina
+              elementos gráficos e orgânicos de forma expressiva, criando uma
+              estética que mistura emoção e abstração. A sobreposição de formas
+              e texturas reforça a complexidade do sentimento transmitido,
+              resultando em uma peça visual intensa e interpretativa. O processo
+              teve início com esboços focados na ideia central de dualidade
+              emocional. A partir disso, foram exploradas diferentes formas de
+              representar contraste entre estados de espírito, até chegar a uma
+              composição que equilibrasse impacto visual e leitura conceitual. O
+              refinamento digital trouxe coesão entre os elementos, ajustando
+              cores, camadas e transições. A escolha das cores desempenha um
+              papel essencial na narrativa. O uso do azul sobre o rosto
+              associado à felicidade cria um contraste intencional, sugerindo
+              uma emoção reprimida ou melancolia por trás de uma aparência
+              positiva. Já o rosto triste, mantido em suas cores naturais, ganha
+              destaque e reforça a autenticidade do sentimento, trazendo a dor
+              para o primeiro plano. Essa inversão visual constrói uma leitura
+              mais profunda da obra, onde a emoção não é apenas representada,
+              mas questionada. Assim, o projeto se define como uma interpretação
+              visual sensível e simbólica, capaz de traduzir a intensidade e a
+              complexidade de uma música mais introspectiva.
+            </p>
+          </div>
+        </div>
+        <div class="separador"></div>
+
+        <div class="projeto-item projeto-direita">
+          <div class="image-stack">
+            <img src="mulher.png" class="active" />
+            <img src="data magna.png" />
+            <div class="indicators">
+              <button class="stack-arrow prev-stack">&#10094;</button>
+              <span data-index="0" class="active"></span>
+              <span data-index="1"></span>
+              <button class="stack-arrow next-stack">&#10095;</button>
+            </div>
+          </div>
+          <div class="text">
+            <h3>Cafeteria Ficticia - Leblanc Jazz Café</h3>
+            <p>
+              A identidade visual do Leblanc Jazz Café foi desenvolvida com uma
+              abordagem sofisticada e temática, buscando traduzir a atmosfera
+              acolhedora e artística de um café inspirado no universo do jazz. A
+              composição equilibra elegância e personalidade, criando uma marca
+              que remete tanto ao conforto de uma cafeteria quanto à
+              expressividade musical. O processo iniciou com esboços voltados à
+              construção do símbolo e da tipografia, explorando formas que
+              conectassem música e identidade visual. A ideia central foi
+              integrar o conceito de jazz de maneira sutil e criativa,
+              resultando na fusão do “J” com a forma de um saxofone. O gato foi
+              incorporado como elemento principal da marca, trazendo carisma e
+              reforçando uma identidade única e memorável. A paleta de cores foi
+              escolhida para reforçar essa atmosfera. O tom de creme cria uma
+              base suave e acolhedora, enquanto o vermelho velvet adiciona
+              profundidade e sofisticação. O preto complementa a composição,
+              trazendo contraste e elegância, além de remeter ao ambiente
+              intimista típico de casas de jazz. Assim, o projeto se define como
+              uma identidade visual que une música, conforto e estilo, criando
+              uma experiência visual que reflete o espírito envolvente do
+              jazz.
+            </p>
+          </div>
+        </div>
+        <div class="separador"></div>
+
+        <div class="projeto-item">
+          <div class="image-stack">
+            <img src="data magna.png" class="active" />
+            <img src="mulher.png" />
+            <div class="indicators">
+              <button class="stack-arrow prev-stack">&#10094;</button>
+              <span data-index="0" class="active"></span>
+              <span data-index="1"></span>
+              <button class="stack-arrow next-stack">&#10095;</button>
+            </div>
+          </div>
+          <div class="text">
+            <h3>Projeto 07</h3>
+            <p>Identidade visual para eventos corporativos e conferências.</p>
+          </div>
+        </div>
+        <div class="separador"></div>
+
+        <div class="projeto-item projeto-direita">
+          <div class="image-stack">
+            <img src="mulher.png" class="active" />
+            <img src="data magna.png" />
+            <div class="indicators">
+              <button class="stack-arrow prev-stack">&#10094;</button>
+              <span data-index="0" class="active"></span>
+              <span data-index="1"></span>
+              <button class="stack-arrow next-stack">&#10095;</button>
+            </div>
+          </div>
+          <div class="text">
+            <h3>Projeto 08</h3>
+            <p>Motion graphics e animações para introdução de vídeos.</p>
+          </div>
+        </div>
+        <div class="separador"></div>
+
+        <div class="projeto-item">
+          <div class="image-stack">
+            <img src="data magna.png" class="active" />
+            <img src="mulher.png" />
+            <div class="indicators">
+              <button class="stack-arrow prev-stack">&#10094;</button>
+              <span data-index="0" class="active"></span>
+              <span data-index="1"></span>
+              <button class="stack-arrow next-stack">&#10095;</button>
+            </div>
+          </div>
+          <div class="text">
+            <h3>Projeto 09</h3>
+            <p>Web design responsivo focado em acessibilidade.</p>
+          </div>
+        </div>
+        <div class="separador"></div>
+
+        <div class="projeto-item projeto-direita">
+          <div class="image-stack">
+            <img src="mulher.png" class="active" />
+            <img src="data magna.png" />
+            <div class="indicators">
+              <button class="stack-arrow prev-stack">&#10094;</button>
+              <span data-index="0" class="active"></span>
+              <span data-index="1"></span>
+              <button class="stack-arrow next-stack">&#10095;</button>
+            </div>
+          </div>
+          <div class="text">
+            <h3>Projeto 10</h3>
+            <p>Consultoria de design e direção de arte para novos negócios.</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div id="image-modal" class="modal">
+      <div class="modal-content-wrapper">
+        <span class="close">&times;</span>
+        <button class="nav-arrow prev-arrow">&#10094;</button>
+        <img id="modal-img" src="" alt="Imagem ampliada" />
+        <button class="nav-arrow next-arrow">&#10095;</button>
+      </div>
+    </div>
+
+    <footer>
+      <p>&copy; 2026</p>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const stacks = document.querySelectorAll(".image-stack");
+        const modal = document.getElementById("image-modal");
+        const modalImg = document.getElementById("modal-img");
+        const closeBtn = document.querySelector(".close");
+        const prevBtn = document.querySelector(".prev-arrow");
+        const nextBtn = document.querySelector(".next-arrow");
+
+        let currentImages = [];
+        let currentIndex = 0;
+
+        stacks.forEach((stack) => {
+          const images = stack.querySelectorAll("img");
+          const indicators = stack.querySelectorAll(".indicators span");
+
+          // --- INÍCIO DA ADIÇÃO (Controle para as setas na própria imagem) ---
+          const prevStackBtn = stack.querySelector(".prev-stack");
+          const nextStackBtn = stack.querySelector(".next-stack");
+          let currentImgIndex = 0;
+          // --- FIM DA ADIÇÃO ---
+
+          function showImage(index) {
+            images.forEach((img) => img.classList.remove("active"));
+            indicators.forEach((ind) => ind.classList.remove("active"));
+            images[index].classList.add("active");
+            indicators[index].classList.add("active");
+            currentImgIndex = index; // Adicionado para manter o controle sincronizado
+          }
+
+          indicators.forEach((indicator, index) => {
+            indicator.addEventListener("click", (e) => {
+              e.stopPropagation();
+              showImage(index);
+            });
+          });
+
+          // --- INÍCIO DA ADIÇÃO (Eventos de clique das setinhas ao lado das bolinhas) ---
+          if (prevStackBtn && nextStackBtn) {
+            prevStackBtn.addEventListener("click", (e) => {
+              e.stopPropagation();
+              let newIndex =
+                currentImgIndex === 0 ? images.length - 1 : currentImgIndex - 1;
+              showImage(newIndex);
+            });
+
+            nextStackBtn.addEventListener("click", (e) => {
+              e.stopPropagation();
+              let newIndex =
+                currentImgIndex === images.length - 1 ? 0 : currentImgIndex + 1;
+              showImage(newIndex);
+            });
+          }
+          // --- FIM DA ADIÇÃO ---
+
+          images.forEach((img, index) => {
+            img.addEventListener("click", () => {
+              currentImages = Array.from(images);
+              currentIndex = index;
+              updateModal();
+              modal.style.display = "flex"; // Usando flex para centralizar
+            });
+          });
+        });
+
+        function updateModal() {
+          modalImg.src = currentImages[currentIndex].src;
+        }
+
+        prevBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          currentIndex =
+            currentIndex === 0 ? currentImages.length - 1 : currentIndex - 1;
+          updateModal();
+        });
+
+        nextBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          currentIndex =
+            currentIndex === currentImages.length - 1 ? 0 : currentIndex + 1;
+          updateModal();
+        });
+
+        closeBtn.addEventListener(
+          "click",
+          () => (modal.style.display = "none"),
+        );
+        modal.addEventListener("click", (e) => {
+          if (
+            e.target === modal ||
+            e.target.classList.contains("modal-content-wrapper")
+          ) {
+            modal.style.display = "none";
+          }
+        });
+
+        document.addEventListener("keydown", (e) => {
+          if (
+            modal.style.display === "flex" ||
+            modal.style.display === "block"
+          ) {
+            if (e.key === "ArrowLeft") prevBtn.click();
+            if (e.key === "ArrowRight") nextBtn.click();
+            if (e.key === "Escape") modal.style.display = "none";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
